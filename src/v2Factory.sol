@@ -30,9 +30,12 @@ contract UniswapV2Factory is IUniswapV2Factory {
         require(getPair[token0][token1] == address(0), 'UniswapV2: PAIR EXISTS');
 
         bytes memory bytecode = type(UniswapV2Pair).creationCode;
-        bytes32 salt = keccak256(abi.encodePacked(token0, token1));
-
+        bytes32 salt;
         assembly {
+            let ptr := mload(0x40)
+            mstore(ptr, token0)
+            mstore(add(ptr, 32), token1)
+            salt := keccak256(ptr, 64)
             pair := create2(0, add(bytecode, 32), mload(bytecode), salt)
         }
 

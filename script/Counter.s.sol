@@ -2,17 +2,17 @@
 pragma solidity ^0.8.13;
 
 import {Script} from "forge-std/Script.sol";
-import {Counter} from "../src/Counter.sol";
+import {UniswapV2Factory} from "../src/v2Factory.sol";
 
-contract CounterScript is Script {
-    Counter public counter;
+contract UniswapV2FactoryScript is Script {
+    UniswapV2Factory public factory;
 
     function setUp() public {}
 
     function run() public {
         vm.startBroadcast();
 
-        counter = new Counter();
+        factory = new UniswapV2Factory();
 
         vm.stopBroadcast();
     }
