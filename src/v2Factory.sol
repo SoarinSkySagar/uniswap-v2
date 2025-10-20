@@ -9,25 +9,25 @@ contract UniswapV2Factory is IUniswapV2Factory {
     address public feeTo;
     address public feeToSetter;
 
-    mapping (address => mapping (address => address)) public getPair;
+    mapping(address => mapping(address => address)) public getPair;
     address[] public allPairs;
 
-    event PairCreated(address indexed token0, address indexed token1, address pair, uint);
+    event PairCreated(address indexed token0, address indexed token1, address pair, uint256);
 
-    modifier onlyFeeToSetter {
-        require(msg.sender == feeToSetter, 'UniswapV2: FORBIDDEN');
+    modifier onlyFeeToSetter() {
+        require(msg.sender == feeToSetter, "UniswapV2: FORBIDDEN");
         _;
     }
 
-    function allPairsLength() external view returns (uint length) {
+    function allPairsLength() external view returns (uint256 length) {
         length = allPairs.length;
     }
 
     function createPair(address tokenA, address tokenB) external returns (address pair) {
-        require(tokenA != tokenB, 'UniswapV2: IDENTICAL_ADDRESSES');
+        require(tokenA != tokenB, "UniswapV2: IDENTICAL_ADDRESSES");
         (address token0, address token1) = tokenA < tokenB ? (tokenA, tokenB) : (tokenB, tokenA);
-        require(token0 != address(0), 'UniswapV2: ZERO ADDRESS');
-        require(getPair[token0][token1] == address(0), 'UniswapV2: PAIR EXISTS');
+        require(token0 != address(0), "UniswapV2: ZERO ADDRESS");
+        require(getPair[token0][token1] == address(0), "UniswapV2: PAIR EXISTS");
 
         bytes memory bytecode = type(UniswapV2Pair).creationCode;
         bytes32 salt;
@@ -53,4 +53,4 @@ contract UniswapV2Factory is IUniswapV2Factory {
     function setFeeToSetter(address _feeToSetter) external onlyFeeToSetter {
         feeToSetter = _feeToSetter;
     }
-}   
+}
