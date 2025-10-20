@@ -31,7 +31,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          forge soldeer install
+          forge install && forge soldeer install
 
       - name: Run Forge build
         run: |
