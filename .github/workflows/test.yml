@@ -24,14 +24,14 @@ jobs:
         run: |
           forge --version
 
+      - name: Install dependencies
+        run: |
+          forge install foundry-rs/forge-std && forge soldeer install
+
       - name: Run Forge fmt
         run: |
           forge fmt --check
         id: fmt
-
-      - name: Install dependencies
-        run: |
-          forge install && forge soldeer install
 
       - name: Run Forge build
         run: |
